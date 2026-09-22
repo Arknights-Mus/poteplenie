@@ -1,0 +1,127 @@
+import telebot, random, os
+from bot_logic import gen_pass, flip_coin
+from telebot.types import ReactionTypeEmoji
+from AI_bot import get_class
+ekologi_1=["Одна пальчиковая батарейка может отравить 400 литров воды или 20 квадратных метров земли. В ней содержатся более десятка видов токсичных веществ, в том числе смертельно опасные ртуть, свинец и кадмий.","В акватории Тихого океана уже долгие годы существует огромный мусорный остров, так называемый «материк» из пластиковых отходов, площадь которого превосходит территорию США.","В Китае есть небольшой населённый пункт Церматт, по которому строго запрещено передвигаться на автомобилях и прочих транспортных средствах с выхлопом. В этой небольшой деревне можно ездить лишь на велосипедах, электромобилях или гужевых повозках."]
+
+fact_global_poteplenia_1=[""]
+
+token = '8408163712:AAFvy-7AZoEZceV3KCPi3lvSxTs9yidrfmg'
+
+bot = telebot.TeleBot(token, parse_mode="HTML")
+
+
+
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "Привет! Я твой Telegram бот. Напиши что-нибудь!")
+
+@bot.message_handler(commands=['hello'])
+def send_hello(message):
+    bot.reply_to(message, "Привет! Как дела?")
+
+@bot.message_handler(commands=['bye'])
+def send_bye(message):
+    bot.reply_to(message, "Пока! Удачи!")
+
+@bot.message_handler(commands=['password'])
+def send_password(message):
+    bot.reply_to(message, gen_pass(10))
+
+@bot.message_handler(commands=['coin'])
+def send_coin(message):
+    coin = flip_coin()
+    bot.reply_to(message, f"Монетка выпала так: {coin}")
+
+
+@bot.message_handler(commands=['cillki_all'])
+def startmsg(message):
+    bot.reply_to(message, "https://www.twitch.tv/arknights_muc_su, https://steamcommunity.com/profiles/76561199890445421/, https://t.me/+pFy2sdHzthVlNTA6, https://www.youtube.com/@Барсуки-в2э")
+@bot.message_handler(commands=['cillka_twich'])
+def startmsg(message):
+    bot.reply_to(message, "Эй, я хочу тебя попросить, присоединиться к моему разработчику на твич, да он молодой, но если ты не захочешь, тебя никто не заставляет  Присоединяйся на твич, Пожалуйста мой разраб будет рад. https://www.twitch.tv/arknights_muc_su")
+
+@bot.message_handler(commands=['cillka_steam'])
+def startmsg(message):
+    bot.reply_to(message, "сыллка на моего разраба в стиме (если что у него много докозательств, что это его акк плюс телефон так что украсть не получиться!)https://steamcommunity.com/profiles/76561199890445421/")
+
+@bot.message_handler(commands=['cillka_tg'])
+def startmsg(message):
+    bot.reply_to(message, "тг какнал общий разраба https://t.me/pFy2sdHzthVlNTA6")
+
+@bot.message_handler(commands=['cillka_youtube'])
+def startmsg(message):
+    bot.reply_to(message, "на моего разраба ютyб канал https://www.youtube.com/@Барсуки-в2э")
+
+@bot.message_handler(commands=['help'])
+def startmsg(message):
+    bot.reply_to(message, "/help=хелп,/start=старт,/hello=привет,/bye=пока,/password=пароль,/ekologi=экология,/memes=мемы,/memes_pov=мемы_пув,/memes_anime=мемы_аниме,/memes_CHiBoDnie=мем_животные,/memes_ekologi=мем_экология,/vact_ekologi=вакт_экология,/cillki_all=все_сыллки,/cillka_twich=твич_сыллка,/cillka_steam=стим_сыллка,/cillka_tg=тг_сыллка,/cillka_youtube=ютуб_сыллка,/fact_global_poteplenia=глобайльное потепление факты,/mems_global_poteplenia=мемы про глобальное потепление")
+
+
+
+@bot.message_handler(commands=['memes'])
+def send_mem(message):
+    img_name = random.choice(os.listdir("memes"))
+    with open(f'memes/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
+@bot.message_handler(commands=['memes_pov'])
+def send_mem(message):
+    img_name = random.choice(os.listdir("memes_pov"))
+    with open(f'memes_pov/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
+@bot.message_handler(commands=['memes_anime'])
+def send_mem(message):
+    img_name1 = random.choice(os.listdir("memes_anime"))
+    with open(f'memes_anime/{img_name1}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)
+@bot.message_handler(commands=['memes_CHiBoDnie'])
+def send_mem(message):
+    img_name2 = random.choice(os.listdir("memes_CHiBoDnie"))
+    with open(f'memes_CHiBoDnie/{img_name2}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)  
+@bot.message_handler(commands=['memes_ekologi'])
+def send_mem(message):
+    img_name = random.choice(os.listdir("memes_ekologi"))
+    with open(f'memes_ekologi/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f) 
+@bot.message_handler(commands=['mems_global_poteplenia'])
+def send_welcomes(message): 
+    img_name = random.choice(os.listdir("mems_global_poteplenia"))
+    with open(f'mems_global_poteplenia/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)
+
+
+
+@bot.message_handler(commands=['ekologi'])
+def send_welcomes(message):
+    bot.reply_to(message, random.choice(ekologi_1))
+@bot.message_handler(commands=['fact_global_poteplenia'])
+def send_welcomes(message):
+    bot.reply_to(message, random.choice('fact_global_poteplenia_1'))
+
+
+
+
+@bot.message_handler(content_types=['photo'])
+def handle_docs_photo(message):
+    file_info = bot.get_file(message.photo[-1].file_id)
+    file_name = file_info.file_path.split('/')[-1]
+    downloaded_file = bot.download_file(file_info.file_path)
+    with open(file_name, 'wb') as new_file:
+        new_file.write(downloaded_file)
+    result = get_class("keras_model.h5","labels.txt,", file_name)
+    bot.send_message(message.chat.id, result)
+
+@bot.message_handler(func=lambda message: True)
+def send_reaction(message):
+    emo = ["\U0001F525", "\U0001F917", "\U0001F60E"]  # or use ["🔥", "🤗", "😎"]
+    bot.set_message_reaction(message.chat.id, message.id, [ReactionTypeEmoji(random.choice(emo))], is_big=False)
+
+
+@bot.message_reaction_handler(func=lambda message: True)
+def get_reactions(message):
+    bot.reply_to(message, f"You changed the reaction from {[r.emoji for r in message.old_reaction]} to {[r.emoji for r in message.new_reaction]}")
+
+bot.infinity_polling(allowed_updates=['message', 'message_reaction'])
+
+bot.polling()
